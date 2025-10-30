@@ -4,7 +4,8 @@ apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzü
 
 ![LINE Logo](line.png)
 
-
+Yeni sürüm 1.0 hatalar çıkabilir store özelliği daha yeni aşamada
+yakında daha çok kategorili hali ile yeni özelliklerle gelecektir!
 ## Neden LINE
 - Tamamen türkçe
 - Basit ve Sade menü
