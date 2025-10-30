@@ -11,25 +11,23 @@ MAGENTA="\033[1;35m"
 BOLD="\033[1m"
 RESET="\033[0m"
 
-# Açılış
+
 echo -e "${BOLD}${CYAN}LINE${RESET} / Gelişmiş Paket Köprüsü"
 echo -e "Komut listesi için line yardım yazın."
 echo ""
 
-# Paket kontrol
+
 check_package(){ local pkg="$1"; if ! apt-cache show "$pkg" >/dev/null 2>&1; then echo -e "${RED}Paket bulunamadı: $pkg${RESET}"; return 1; fi; return 0; }
 
-# Onay alma
 confirm(){ local prompt="$1"; while true; do printf "%s (E/H): " "$prompt"; read -r ans; case "$ans" in [Ee]*) return 0;; [Hh]*) return 1;; *) echo "Lütfen E veya H girin.";; esac; done; }
 
-# Paket işlemleri
+
 paket_yukle(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Paket adı verilmedi.${RESET}"; return 1; }; if check_package "$pkg"; then if confirm "Paket $pkg yüklemek istiyor musunuz?"; then echo -e "${BLUE}Yükleniyor: $pkg${RESET}"; sudo apt update -qq; sudo apt install -y "$pkg"; else echo -e "${YELLOW}İptal edildi.${RESET}"; fi; fi; }
 paket_kaldir(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Paket adı verilmedi.${RESET}"; return 1; }; if dpkg -s "$pkg" >/dev/null 2>&1; then if confirm "Paket $pkg kaldırılacak, onaylıyor musunuz?"; then echo -e "${YELLOW}Kaldırılıyor: $pkg${RESET}"; sudo apt remove -y "$pkg"; else echo -e "${YELLOW}İptal edildi.${RESET}"; fi; else echo -e "${RED}Paket kurulu değil: $pkg${RESET}"; fi; }
 paket_yukselt(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Paket adı verilmedi.${RESET}"; return 1; }; if check_package "$pkg"; then if confirm "Paket $pkg yükseltilecek, onaylıyor musunuz?"; then echo -e "${CYAN}Yükseltiliyor: $pkg${RESET}"; sudo apt update -qq; sudo apt install --only-upgrade -y "$pkg"; else echo -e "${YELLOW}İptal edildi.${RESET}"; fi; fi; }
 paket_ara(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Aramak için paket adı girin.${RESET}"; return 1; }; apt search "$pkg" | head -n 20; }
 paket_goruntule(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Görüntülemek için paket adı girin.${RESET}"; return 1; }; if check_package "$pkg"; then apt show "$pkg"; fi; }
 
-# Yardım menüsü
 line_yardim(){
     echo -e "${MAGENTA}===== LINE Yardım =====${RESET}"
     echo "line paket <paket>    -> Paket yükle"
@@ -44,7 +42,7 @@ line_yardim(){
     echo -e "${YELLOW}Daha fazla komut için: line bilgi${RESET}"
 }
 
-# LINE Store (hızlı kurulum)
+
 line_store(){
     declare -A KATEGORILER
     KATEGORILER[tarayicilar]="firefox chromium midori"
@@ -78,10 +76,9 @@ line_store(){
     paket_yukle "${pkg_index[$pkg_id]}"
 }
 
-# Hata mesajı
 hata_mesaji(){ echo -e "${RED}Yanlış komut! line yardım ile bakın.${RESET}"; }
 
-# Komut ayrıştırıcı
+
 parse_and_run(){
     local line="$*"
     [ -z "$line" ] && return 0
@@ -89,7 +86,7 @@ parse_and_run(){
     cmd="$1"; shift
     args="$*"
 
-    # Tüm komutlar line ile başlamalı
+    
     case "$cmd" in
         line)
             sub="$1"; shift
