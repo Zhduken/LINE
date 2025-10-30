@@ -1,6 +1,10 @@
 ## LINE
 apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzüdür.
 
+
+![LINE Logo](line.png)
+
+
 ## Neden LINE
 - Tamamen türkçe
 - Basit ve Sade menü
