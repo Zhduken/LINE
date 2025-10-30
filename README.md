@@ -1,5 +1,5 @@
-#LINE
-LINE, apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzüdür.
+## LINE
+apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzüdür.
 
 ## Neden LINE
 - Tamamen türkçe
