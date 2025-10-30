@@ -1,4 +1,5 @@
-# LINE, apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzüdür.
+#LINE
+LINE, apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzüdür.
 
 ## Neden LINE
 - Tamamen türkçe
@@ -14,3 +15,10 @@
 - Hatalı paket kontrolü
 - Paket arama, silme ve yükseltme
 - Sistem güncelleme / yükseltme
+
+## Kurulum
+```bash
+git clone https://github.com/kullanici/line.git
+cd line
+chmod +x line.sh
+./line.sh
