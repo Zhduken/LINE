@@ -23,9 +23,10 @@ apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzü
 
 ## Kurulum
 ```bash
-git clone https://github.com/kullanici/line.git
-cd line
+git clone https://github.com/Zhduken/LINE.git
+cd LINE
 chmod +x line.sh
+./line.sh
 ```
 ## BAŞLATMA
 ```
