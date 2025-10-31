@@ -2,7 +2,7 @@
 apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzüdür.
 
 ## YENİ SÜRÜM
-![LINE Logo](line.1.1.png)
+![LINE Logo](line_update.png)
 ## Güncelleme Line 1.1
 - Daha renkli arayüz
 - Hatalar düzeltildi
