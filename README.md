@@ -27,11 +27,11 @@ yakında daha çok kategorili hali ile yeni özelliklerle gelecektir!
 git clone https://github.com/Zhduken/LINE.git
 cd LINE
 chmod +x line.sh
-./line.sh
+./LINE/line.sh 
 ```
 ## BAŞLATMA
 ```
-./line.sh
+./LINE/line.sh 
 ```
 ## OTOMATİK AÇMA
 ```
