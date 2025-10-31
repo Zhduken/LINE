@@ -1,113 +1,108 @@
-#!/usr/bin/env bash
+#!/bin/bash
 clear
+theme="green"
+repo_url="https://packages.line-os.local"
 
-RED="\033[1;31m"
-GREEN="\033[1;32m"
-YELLOW="\033[1;33m"
-BLUE="\033[1;34m"
-CYAN="\033[1;36m"
-MAGENTA="\033[1;35m"
-BOLD="\033[1m"
-RESET="\033[0m"
-
-
-echo -e "${BOLD}${CYAN}LINE${RESET} / Gelişmiş Paket Köprüsü"
-echo -e "Komut listesi için line yardım yazın."
-echo ""
-
-
-check_package(){ local pkg="$1"; if ! apt-cache show "$pkg" >/dev/null 2>&1; then echo -e "${RED}Paket bulunamadı: $pkg${RESET}"; return 1; fi; return 0; }
-
-confirm(){ local prompt="$1"; while true; do printf "%s (E/H): " "$prompt"; read -r ans; case "$ans" in [Ee]*) return 0;; [Hh]*) return 1;; *) echo "Lütfen E veya H girin.";; esac; done; }
-
-
-paket_yukle(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Paket adı verilmedi.${RESET}"; return 1; }; if check_package "$pkg"; then if confirm "Paket $pkg yüklemek istiyor musunuz?"; then echo -e "${BLUE}Yükleniyor: $pkg${RESET}"; sudo apt update -qq; sudo apt install -y "$pkg"; else echo -e "${YELLOW}İptal edildi.${RESET}"; fi; fi; }
-paket_kaldir(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Paket adı verilmedi.${RESET}"; return 1; }; if dpkg -s "$pkg" >/dev/null 2>&1; then if confirm "Paket $pkg kaldırılacak, onaylıyor musunuz?"; then echo -e "${YELLOW}Kaldırılıyor: $pkg${RESET}"; sudo apt remove -y "$pkg"; else echo -e "${YELLOW}İptal edildi.${RESET}"; fi; else echo -e "${RED}Paket kurulu değil: $pkg${RESET}"; fi; }
-paket_yukselt(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Paket adı verilmedi.${RESET}"; return 1; }; if check_package "$pkg"; then if confirm "Paket $pkg yükseltilecek, onaylıyor musunuz?"; then echo -e "${CYAN}Yükseltiliyor: $pkg${RESET}"; sudo apt update -qq; sudo apt install --only-upgrade -y "$pkg"; else echo -e "${YELLOW}İptal edildi.${RESET}"; fi; fi; }
-paket_ara(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Aramak için paket adı girin.${RESET}"; return 1; }; apt search "$pkg" | head -n 20; }
-paket_goruntule(){ local pkg="$1"; [ -z "$pkg" ] && { echo -e "${YELLOW}Görüntülemek için paket adı girin.${RESET}"; return 1; }; if check_package "$pkg"; then apt show "$pkg"; fi; }
-
-line_yardim(){
-    echo -e "${MAGENTA}===== LINE Yardım =====${RESET}"
-    echo "line paket <paket>    -> Paket yükle"
-    echo "line kaldır <paket>   -> Paket kaldır"
-    echo "line yükselt <paket>  -> Paket yükselt"
-    echo "line ara <paket>      -> Paket ara"
-    echo "line show <paket>     -> Paket detaylarını göster"
-    echo "line store            -> Kategorilerden hızlı kurulum"
-    echo "line yardım           -> Yardım menüsü"
-    echo "line exit             -> Çıkış yap"
-    echo ""
-    echo -e "${YELLOW}Daha fazla komut için: line bilgi${RESET}"
+function set_theme {
+    if [ "$theme" = "red" ]; then echo -e "\033[1;31m$1\033[0m"
+    elif [ "$theme" = "green" ]; then echo -e "\033[1;32m$1\033[0m"
+    elif [ "$theme" = "purple" ]; then echo -e "\033[1;35m$1\033[0m"
+    elif [ "$theme" = "cyber" ]; then echo -e "\033[38;5;51m$1\033[0m"
+    else echo "$1"; fi
 }
 
-
-line_store(){
-    declare -A KATEGORILER
-    KATEGORILER[tarayicilar]="firefox chromium midori"
-    KATEGORILER[editors]="nano vim codeblocks"
-    KATEGORILER[gelistirici]="git build-essential python3-pip"
-
-    echo -e "${CYAN}Kategoriler:${RESET}"
-    i=1
-    declare -A kat_index
-    for cat in "${!KATEGORILER[@]}"; do
-        echo "[$i] $cat"
-        kat_index[$i]=$cat
-        ((i++))
+function intro {
+    for i in {1..3}; do
+        echo -e "\033[1;31m██\033[1;32m██\033[1;35m██\033[0m"
+        sleep 0.1
     done
-
-    printf "Kategori seçin (id ile): "; read -r secilen_id
-    if ! [[ "$secilen_id" =~ ^[0-9]+$ ]] || [ -z "${kat_index[$secilen_id]}" ]; then echo -e "${RED}Geçersiz seçim.${RESET}"; return; fi
-    secilen="${kat_index[$secilen_id]}"
-
-    echo -e "${YELLOW}Paketler (${secilen}):${RESET}"
-    i=1
-    declare -A pkg_index
-    for p in ${KATEGORILER[$secilen]}; do
-        echo "[$i] $p"
-        pkg_index[$i]=$p
-        ((i++))
-    done
-
-    printf "Kurmak istediğiniz paket id: "; read -r pkg_id
-    if ! [[ "$pkg_id" =~ ^[0-9]+$ ]] || [ -z "${pkg_index[$pkg_id]}" ]; then echo -e "${RED}Geçersiz seçim.${RESET}"; return; fi
-    paket_yukle "${pkg_index[$pkg_id]}"
+    set_theme "===== LINE Paket Yöneticisine Hoşgeldin ====="
+    echo
 }
 
-hata_mesaji(){ echo -e "${RED}Yanlış komut! line yardım ile bakın.${RESET}"; }
-
-
-parse_and_run(){
-    local line="$*"
-    [ -z "$line" ] && return 0
-    set -- $line
-    cmd="$1"; shift
-    args="$*"
-
-    
-    case "$cmd" in
-        line)
-            sub="$1"; shift
-            case "$sub" in
-                paket) paket_yukle "$*";;
-                kaldır) paket_kaldir "$*";;
-                yükselt) paket_yukselt "$*";;
-                ara) paket_ara "$*";;
-                show) paket_goruntule "$*";;
-                yardım) line_yardim;;
-                store) line_store;;
-                exit) exit 0;;
-                *) hata_mesaji;;
-            esac
-            ;;
-        *) hata_mesaji;;
-    esac
+function help_menu {
+    set_theme "Komutlar:"
+    echo " line store       -> Mağazayı açar"
+    echo " line install X   -> Paket kurar"
+    echo " line remove X    -> Paket siler"
+    echo " line search X    -> Paket arar"
+    echo " line list        -> Kurulu paketleri listeler"
+    echo " line update      -> Güncellemeleri kontrol eder"
+    echo " line settings    -> Ayarlar menüsünü açar"
+    echo " line help        -> Bu menüyü gösterir"
+    echo " exit             -> Çıkış"
+    echo
 }
 
-# Ana loop
+function settings_menu {
+    clear
+    set_theme "===== LINE AYARLARI ====="
+    echo "1) Tema Değiştir"
+    echo "2) Repo Adresi Değiştir"
+    echo "3) Güncelleme Kontrolü"
+    echo "4) Geri Dön"
+    read -p "> " ch
+    if [ "$ch" = "1" ]; then
+        clear
+        echo "Temalar:"
+        echo "1) Kırmızı"
+        echo "2) Yeşil"
+        echo "3) Mor"
+        echo "4) Cyber Glow"
+        read -p "> " t
+        if [ "$t" = "1" ]; then theme="red"
+        elif [ "$t" = "2" ]; then theme="green"
+        elif [ "$t" = "3" ]; then theme="purple"
+        elif [ "$t" = "4" ]; then theme="cyber"
+        fi
+    elif [ "$ch" = "2" ]; then
+        read -p "Yeni repo URL gir: " repo_url
+    elif [ "$ch" = "3" ]; then
+        set_theme "Sistem güncel ✔"
+        sleep 1
+    fi
+}
+
+function store {
+    clear
+    set_theme "===== LINE STORE ====="
+    echo "Kategoriler:"
+    echo "1) Sistem Araçları"
+    echo "2) Internet Araçları"
+    echo "3) Eğlence"
+    echo "4) İleri Araçlar"
+    echo "5) Geri"
+    read -p "> " ct
+    clear
+    if [ "$ct" = "1" ]; then
+        echo "nano - Basit metin düzenleyici"
+        echo "htop - Sistem izleme"
+        echo "neofetch - Sistem bilgi gösterici"
+    elif [ "$ct" = "2" ]; then
+        echo "wget - Dosya indirme"
+        echo "curl - Web istek aracı"
+        echo "lynx - Terminal web tarayıcı"
+    elif [ "$ct" = "3" ]; then
+        echo "cowsay - ASCII inek"
+        echo "sl - Tren animasyonu"
+        echo "cmatrix - Matrix yağmuru"
+    elif [ "$ct" = "4" ]; then
+        echo "nmap - Ağ tarama"
+        echo "wireshark - Paket analiz"
+        echo "aircrack-ng - Wi-Fi kırma"
+    fi
+    echo
+}
+intro
+help_menu
+
 while true; do
-    printf "%bline> ${RESET}" "${GREEN}"
-    if ! IFS= read -r user_input; then echo ""; continue; fi
-    parse_and_run "$user_input"
+    echo -n "$(set_theme LINE)> "
+    read cmd arg
+    if [ "$cmd" = "line" ] && [ "$arg" = "store" ]; then store
+    elif [ "$cmd" = "line" ] && [ "$arg" = "help" ]; then help_menu
+    elif [ "$cmd" = "line" ] && [ "$arg" = "settings" ]; then settings_menu
+    elif [ "$cmd" = "exit" ]; then exit
+    else set_theme "Komut anlaşılamadı."
+    fi
 done
