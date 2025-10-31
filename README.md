@@ -21,7 +21,7 @@ apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzü
 
 ## STORE Güncellemesi
 
-![LINE Store](line_update.png)
+![LINE Store](line_store.png)
 
 - Kolayca indirme
 - Sürekli güncellenen menü
