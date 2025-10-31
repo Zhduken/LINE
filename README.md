@@ -18,6 +18,14 @@ apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzü
 - Renkli ve Fish tarzı arayüz
 - Günceldir sürekli özellikler eklenir
 - Line store özelliği ile daha yenilikçi
+
+## STORE Güncellemesi
+
+![LINE Store](line_update.png)
+
+- Kolayca indirme
+- Sürekli güncellenen menü
+- Sh bilgisine gerek yok
   
 ## Özellikler
 - Türkçe destekli ve Yeni diller yakında eklenecek
@@ -42,4 +50,7 @@ chmod +x line.sh
 ```
 echo "bash /home/kullanici/line.sh" >> ~/.bashrc
 ```
+## İLETİŞİM
+Bulduğunuz hatalar için zhduken@gmail.com ile iletişime
+geçerseniz çok memmun olurum!
 
