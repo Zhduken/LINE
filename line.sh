@@ -9,7 +9,7 @@ SUDO_AUTO=no
 THEME=default
 EOF
 
-# RENK FONKSİYONU
+
 color() {
   case "$1" in
     red) echo -e "\033[1;31m$2\033[0m";;
@@ -29,13 +29,11 @@ THEME=$THEME
 EOF
 }
 
-# GİRİŞ EKRANI
 intro(){
   color cyan "===== Gelişmiş Paket Köprüsü ====="
   echo
 }
 
-# YARDIM MENÜSÜ
 help_menu(){
   color magenta "===== YARDIM MENÜSÜ ====="
   echo "line paket <isim>      -> Paket yükle"
@@ -60,7 +58,6 @@ help_menu(){
   echo
 }
 
-# AYARLAR
 settings_menu(){
   read_config
   color magenta "===== AYARLAR ====="
@@ -78,7 +75,6 @@ settings_menu(){
   esac
 }
 
-# PAKET İŞLEMLERİ
 check_package(){ apt-cache show "$1" >/dev/null 2>&1; }
 confirm(){ [ "$SUDO_AUTO" = "yes" ] && return 0; read -p "$1 (E/H): " a; [[ "$a" =~ [Ee] ]]; }
 paket_yukle(){ check_package "$1" && confirm "Yükle: $1?" && sudo apt install -y "$1" || echo "Paket bulunamadı"; }
@@ -91,7 +87,6 @@ line_update(){ confirm "Tüm sistemi güncellemek istiyor musunuz?" && sudo apt 
 line_onar(){ sudo apt --fix-broken install -y; sudo dpkg --configure -a; }
 line_logs(){ sudo tail -n 200 /var/log/apt/history.log; }
 
-# STORE VERİLERİ
 declare -A STORE
 STORE[tarayicilar]="firefox:Popüler chromium:Chromium tabanlı brave:Gizlilik vivaldi:Özelleştirilebilir"
 STORE[editörler]="nano:Hafif vim:Gelişmiş neovim:Modern code:VSCode codeblocks:C++ IDE"
