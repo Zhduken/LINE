@@ -1,6 +1,11 @@
 ## LINE
 apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzüdür.
 
+## FEEDBACK
+Yeni dil destekleri, dağıtım seçenekleri ve store güncellemesi
+ile oluşan hataları veya önerileri zhduken@gmail.com adresine
+bildirirseniz çok mutlu olurum :)
+
 ## YENİ SÜRÜM
 ![LINE Logo](line_1.2.1.png)
 ## Line 1.2.1 Büyük Güncelleme
@@ -56,7 +61,5 @@ chmod +x line.sh
 ```
 echo "bash /home/kullanici/line.sh" >> ~/.bashrc
 ```
-## İLETİŞİM
-Bulduğunuz hatalar için zhduken@gmail.com ile iletişime
-geçerseniz çok memmun olurum!
+
 
