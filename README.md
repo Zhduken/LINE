@@ -1,6 +1,12 @@
 ## LINE
 apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzüdür.
 
+## YENİ SÜRÜM
+![LINE Logo](line.1.2.png)
+## Line 1.2 Büyük Güncelleme
+- Çoklu dil desteği geldi
+- Arch, Fedora uyumlu
+- Büyük store yenilemesi
 ## ESKİ SÜRÜM
 ![LINE Logo](line_update.png)
 ## Line 1.1
@@ -20,11 +26,12 @@ apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzü
 
 ## STORE Güncellemesi
 
-![LINE Store](line_store.png)
+![LINE Store](line.store.png)
 
 - Kolayca indirme
 - Sürekli güncellenen menü
 - Sh bilgisine gerek yok
+- Yeni güncelleme ile daha çok seçenek
   
 ## Özellikler
 - Türkçe destekli ve Yeni diller yakında eklenecek
