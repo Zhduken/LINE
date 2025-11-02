@@ -2,8 +2,8 @@
 apt paket yöneticisi için modern, hızlı ve interaktif bir terminal arayüzüdür.
 
 ## YENİ SÜRÜM
-![LINE Logo](line.1.2.png)
-## Line 1.2 Büyük Güncelleme
+![LINE Logo](line_1.2.1png)
+## Line 1.2.1 Büyük Güncelleme
 - Çoklu dil desteği geldi
 - Arch, Fedora uyumlu
 - Büyük store yenilemesi
