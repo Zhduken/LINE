@@ -22,7 +22,8 @@ bildirirseniz çok mutlu olurum :)
 
 
 ## Neden LINE
-- Tamamen türkçe
+- Çok dil desteği
+- Arch, Ubuntu ve Fedora uyumlu
 - Basit ve Sade menü
 - Hatalı paket kontrolü
 - Renkli ve Fish tarzı arayüz
@@ -39,7 +40,9 @@ bildirirseniz çok mutlu olurum :)
 - Yeni güncelleme ile daha çok seçenek
   
 ## Özellikler
-- Türkçe destekli ve Yeni diller yakında eklenecek
+- Çok dilli
+- Otomatik dağıtım algılama
+- Store özelliği
 - Ayarlanabilir özellikler mevcut
 - Renkli arayüz
 - Hatalı paket kontrolü
