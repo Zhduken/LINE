@@ -6,6 +6,9 @@ Yeni dil destekleri, dağıtım seçenekleri ve store güncellemesi
 ile oluşan hataları veya önerileri zhduken@gmail.com adresine
 bildirirseniz çok mutlu olurum :)
 
+## UYARI 
+Sh ve Bash için sorunsuz uyumludur! Fakat fish ve zsh'da hata verebilir!
+
 ## YENİ SÜRÜM
 ![LINE Logo](line_1.2.1.png)
 ## Line 1.2.1 Büyük Güncelleme
@@ -54,7 +57,7 @@ bildirirseniz çok mutlu olurum :)
 git clone https://github.com/Zhduken/LINE.git
 cd LINE
 chmod +x line.sh
-./LINE/line.sh 
+./line.sh
 ```
 ## BAŞLATMA
 ```
